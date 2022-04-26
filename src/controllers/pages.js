@@ -5,5 +5,5 @@ function getUriPage() {
 }
 
 module.exports = {
-  '': function (req, res) { res.sendFile(path.join(`${getUriPage()}/ui_lucioles.html`)); },
+  '': function (req, res) { res.sendFile(path.join(`${getUriPage()}/accueil/ui_lucioles.html`)); },
 };
