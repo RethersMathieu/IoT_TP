@@ -1,11 +1,15 @@
 const { MongoClient } = require('mongodb');
 require("../../env/env");
 
-const URI = process.env.DATABASE_URI || '';
-const name = process.env.DATABASE_NAME;
+const URI = process.env.DATABASE_URI;
 
 async function initClient() {
-    return await MongoClient.connect(URI);
+    try {
+        return await MongoClient.connect(URI);
+    } catch (e) {
+        console.log(e);
+        throw e;
+    }
 }
 
 module.exports = initClient();

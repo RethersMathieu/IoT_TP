@@ -15,12 +15,12 @@ async function initDBO() {
     dbo = mg_client.db(name);
     dbo
       .listCollections({ name: nameCollectionTemp })
-      .next(function (err, collinfo) {
+      .next(function (_err, collinfo) {
         if (collinfo) dbo.collection(nameCollectionTemp).drop();
       });
     dbo
       .listCollections({ name: nameCollectionLight })
-      .next(function (err, collinfo) {
+      .next(function (_err, collinfo) {
         if (collinfo) dbo.collection(nameCollectionLight).drop();
       });
 
