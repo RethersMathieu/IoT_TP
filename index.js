@@ -57,10 +57,12 @@ async function init() {
     await initMongo();
     await initMQTT();
     const express = require("express");
+    const path = require('path')
     const bodyParser = require("body-parser");
     app = express();
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
+    app.use(express.static(path.join(__dirname,'src', 'pages')));
 
     app.use(express.static(path.join(__dirname, "/")));
     app.use(function (request, response, next) {
