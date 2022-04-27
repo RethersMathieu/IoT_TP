@@ -12,10 +12,12 @@ function isJSON(str) {
 }
 
 async function initMongo() {
+    console.log('CONNECTING TO MONGODB');
     return await require("./src/core/database/db");
 }
 
 async function initMQTT(dbo) {
+    console.log('CONNECTING TO MQTT');
     const mqtt_client = require("./src/core/mqtt/client");
     const TOPIC_LIGHT = "my/sensors/ym/topic_light";
     const TOPIC_TEMP = "my/sensors/ym/topic_temp";
@@ -55,6 +57,7 @@ async function initMQTT(dbo) {
 }
 
 async function init() {
+    console.log('INIT APP');
     const dbo = await initMongo();
     const mqtt_client = await initMQTT(dbo);
     const router = require('./src/routers/router')(dbo);
