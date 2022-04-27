@@ -1,3 +1,0 @@
-MongoDB:
-- USER: ESP_NodeJS_IoT
-- PASSWORD: A03J9QbJVTK5dne3
