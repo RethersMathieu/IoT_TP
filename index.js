@@ -10,13 +10,11 @@ function isJSON(str) {
     return obj;
 }
 
-async function initMongo() {
-    console.log('CONNECTING TO MONGODB');
-    return await require("./src/core/database/db");
+function initMongo() {
+    return require("./src/core/database/db");
 }
 
 async function initMQTT(dbo) {
-    console.log('CONNECTING TO MQTT');
     const mqtt_client = require("./src/core/mqtt/client");
     const TOPIC_LIGHT = "my/sensors/ym/topic_light";
     const TOPIC_TEMP = "my/sensors/ym/topic_temp";
@@ -31,7 +29,7 @@ async function initMQTT(dbo) {
     mqtt_client.on("message", function (topic, message) {
         console.log("\nMQTT message on TOPIC:", topic.toString());
         console.log("Message payload", message.toString());
-        
+
         const msg = isJSON(message.toString());
         if (!msg && lodash.isUndefined(msg.who) && lodash.isUndefined(msg.value)) {
             console.error('Message refused');
@@ -56,7 +54,6 @@ async function initMQTT(dbo) {
 }
 
 async function init() {
-    console.log('INIT APP');
     const dbo = await initMongo();
     await initMQTT(dbo);
     const router = require('./src/routers/router')(dbo);

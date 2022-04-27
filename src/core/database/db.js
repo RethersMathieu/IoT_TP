@@ -4,8 +4,7 @@ const name = 'lucioles';
 const nameCollectionTemp = "temp";
 const nameCollectionLight = "light";
 
-async function initDBO() {
-  console.log('CREATE DBO');
+function initDBO() {
   const client = require('./client');
   let dbo;
   client.connect(function (err, mg_client) {
