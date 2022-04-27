@@ -2,7 +2,6 @@ const path = require('path');
 const express = require("express");
 const bodyParser = require("body-parser");
 const lodash = require('lodash');
-require('dotenv').config();
 
 function isJSON(str) {
     let obj;

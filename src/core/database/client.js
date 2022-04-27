@@ -7,7 +7,7 @@ const URI = 'mongodb+srv://ESP_NodeJS_IoT:Rm5YjSvPzMJz32gV@iot-tp.7vrbz.mongodb.
 async function initClient() {
     console.log('CREATE CONNECTOR');
     try {
-        return await MongoClient.connect(URI);
+        return await MongoClient.connect(URI, { useUnifiedTopology: true, useNewUrlParser: true });
     } catch (e) {
         console.log(e);
         throw e;
