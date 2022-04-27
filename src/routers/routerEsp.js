@@ -1,6 +1,7 @@
 const router = require("express").Router();
-const controllers = require("../controllers/esp");
 
-router.get("/:what", controllers.getData);
-
-module.exports = router;
+module.exports = function (dbo) {
+    const controllers = require("../controllers/esp")(dbo);
+    router.get("/:what", controllers.getData);
+    return router;
+};

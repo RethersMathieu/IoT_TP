@@ -1,8 +1,8 @@
-var path = require('path');
-var _ = require('lodash');
+const path = require('path');
+const express = require("express");
+const bodyParser = require("body-parser");
+const lodash = require('lodash');
 const config = require("./src/env/env");
-
-var mqtt_client, dbo, app, listener;
 
 function isJSON(str) {
     let obj;
@@ -12,11 +12,11 @@ function isJSON(str) {
 }
 
 async function initMongo() {
-    dbo = await require("./src/core/database/db");
+    return await require("./src/core/database/db");
 }
 
-async function initMQTT() {
-    mqtt_client = require("./src/core/mqtt/client");
+async function initMQTT(dbo) {
+    const mqtt_client = require("./src/core/mqtt/client");
     const TOPIC_LIGHT = "my/sensors/ym/topic_light";
     const TOPIC_TEMP = "my/sensors/ym/topic_temp";
     mqtt_client.on("connect", function () {
@@ -32,7 +32,7 @@ async function initMQTT() {
         console.log("Message payload", message.toString());
         let msg;
 
-        if (!(msg = isJSON(message.toString())) && _.isUndefined(msg.who) && _.isUndefined(msg.value)) {
+        if (!(msg = isJSON(message.toString())) && lodash.isUndefined(msg.who) && lodash.isUndefined(msg.value)) {
             console.error('Message refused');
             return;
         }
@@ -51,19 +51,17 @@ async function initMQTT() {
             console.log('\nItem:', `${JSON.stringify(new_entry)}`, '\ninserted in db in collection:', key);
         });
     });
+    return mqtt_client;
 }
 
 async function init() {
-    await initMongo();
-    await initMQTT();
-    const express = require("express");
-    const path = require('path')
-    const bodyParser = require("body-parser");
+    const dbo = await initMongo();
+    const mqtt_client = await initMQTT(dbo);
+    const router = require('./src/routers/router')(dbo);
     app = express();
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.use(express.static(path.join(__dirname,'src', 'pages')));
-
     app.use(express.static(path.join(__dirname, "/")));
     app.use(function (request, response, next) {
         //Pour eviter les problemes de CORS/REST
@@ -75,7 +73,7 @@ async function init() {
         );
         next();
     });
-    app.use(require("./src/routers/router"));
+    app.use(router);
     listener = app.listen(process.env.PORT || 3000, function () {
         console.log("Express Listening on port", listener.address().port);
     });
