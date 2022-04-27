@@ -1,6 +1,6 @@
 const { listDatabases } = require("./function");
 
-const name = process.env.DATABASE_NAME;
+const name = 'lucioles';
 const nameCollectionTemp = "temp";
 const nameCollectionLight = "light";
 
