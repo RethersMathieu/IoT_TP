@@ -54,7 +54,7 @@ async function initMQTT(dbo) {
 }
 
 async function init() {
-    const dbo = await initMongo();
+    const dbo = initMongo();
     await initMQTT(dbo);
     const router = require('./src/routers/router')(dbo);
     const app = express();
