@@ -2,6 +2,7 @@ const path = require('path');
 const express = require("express");
 const bodyParser = require("body-parser");
 const lodash = require('lodash');
+const config = require("./src/env/env");
 
 function isJSON(str) {
     let obj;
@@ -10,8 +11,8 @@ function isJSON(str) {
     return obj;
 }
 
-function initMongo() {
-    return require("./src/core/database/db");
+async function initMongo() {
+    return await require("./src/core/database/db");
 }
 
 async function initMQTT(dbo) {
@@ -29,9 +30,9 @@ async function initMQTT(dbo) {
     mqtt_client.on("message", function (topic, message) {
         console.log("\nMQTT message on TOPIC:", topic.toString());
         console.log("Message payload", message.toString());
+        let msg;
 
-        const msg = isJSON(message.toString());
-        if (!msg && lodash.isUndefined(msg.who) && lodash.isUndefined(msg.value)) {
+        if (!(msg = isJSON(message.toString())) && lodash.isUndefined(msg.who) && lodash.isUndefined(msg.value)) {
             console.error('Message refused');
             return;
         }
@@ -54,15 +55,15 @@ async function initMQTT(dbo) {
 }
 
 async function init() {
-    const dbo = initMongo();
-    await initMQTT(dbo);
+    const dbo = await initMongo();
+    const mqtt_client = await initMQTT(dbo);
     const router = require('./src/routers/router')(dbo);
-    const app = express();
+    app = express();
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.use(express.static(path.join(__dirname,'src', 'pages')));
     app.use(express.static(path.join(__dirname, "/")));
-    app.use(function (_request, response, next) {
+    app.use(function (request, response, next) {
         //Pour eviter les problemes de CORS/REST
         response.header("Access-Control-Allow-Origin", "*");
         response.header("Access-Control-Allow-Headers", "*");
@@ -73,16 +74,9 @@ async function init() {
         next();
     });
     app.use(router);
-    let listener;
     listener = app.listen(process.env.PORT || 3000, function () {
         console.log("Express Listening on port", listener.address().port);
     });
 }
 
-const app = express();
-app.get('/', function (req, res) {
-    res.send('HELLO;WORLD!');
-});
-app.listen(3000, function () {
-    console.log('INIT');
-});
+init().catch(console.error);

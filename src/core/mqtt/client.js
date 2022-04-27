@@ -1,4 +1,5 @@
 const mqtt = require("mqtt");
+require("../../env/env");
 
-const URL = 'http://broker.hivemq.com';
+const URL = process.env.MQTT_URL || '';
 module.exports = mqtt.connect(URL);

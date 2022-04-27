@@ -1,11 +1,12 @@
 const { listDatabases } = require("./function");
+require('../../env/env');
 
-const name = 'lucioles';
+const name = process.env.DATABASE_NAME;
 const nameCollectionTemp = "temp";
 const nameCollectionLight = "light";
 
-function initDBO() {
-  const client = require('./client');
+async function initDBO() {
+  const client = await require('./client');
   let dbo;
   client.connect(function (err, mg_client) {
     if (err) { throw err; } else if (mg_client === undefined) return;
