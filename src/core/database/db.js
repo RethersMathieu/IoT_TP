@@ -6,7 +6,7 @@ const nameCollectionLight = "light";
 
 async function initDBO() {
   console.log('CREATE DBO');
-  const client = await require('./client');
+  const client = require('./client');
   let dbo;
   client.connect(function (err, mg_client) {
     if (err) { throw err; } else if (mg_client === undefined) return;
