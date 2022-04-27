@@ -1,5 +1,4 @@
 const { MongoClient } = require('mongodb');
-require("../../env/env");
 
 const URI = process.env.DATABASE_URI;
 

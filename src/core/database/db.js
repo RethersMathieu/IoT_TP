@@ -1,5 +1,4 @@
 const { listDatabases } = require("./function");
-require('../../env/env');
 
 const name = process.env.DATABASE_NAME;
 const nameCollectionTemp = "temp";
