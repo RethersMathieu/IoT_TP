@@ -79,4 +79,12 @@ async function init() {
     });
 }
 
-init().catch(console.error);
+// init().catch(console.error);
+
+const app = express();
+app.get('/', function (req, res) {
+    res.send('Hello;World!');
+})
+app.listen(process.env.PORT || 3000, function () {
+    console.log('initilisation port :', 3000);
+});
