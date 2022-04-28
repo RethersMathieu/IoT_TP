@@ -7,7 +7,7 @@ const controllers = require("../controllers/pages");
 app.use(express.static(path.join(__dirname, '../pages')))
 
 Object.entries(controllers).forEach(([key, controller]) => {
-    router.get(`/${key}`, controller);
+    router.get(key, controller);
 });
 
 module.exports = router;
