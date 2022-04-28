@@ -1,5 +1,4 @@
-let dbo;
-(async () => dbo = await require('../core/database/db'))();
+let connector;
 
 function allAdressMax(req, res) {
 
@@ -9,7 +8,7 @@ function getData(req, res) {
   const { who } = req.query;
   const { limit } = req.query;
   const { what } = req.params;
-  dbo
+  connector
     .collection(what)
     .find({ who })
     .sort({ _id: -1 })
@@ -20,4 +19,7 @@ function getData(req, res) {
     });
 }
 
-module.exports = { getData };
+module.exports = function (dbo) {
+  connector = dbo;
+  return { getData }
+};
