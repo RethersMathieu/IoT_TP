@@ -110,11 +110,7 @@ function get_samples(path_on_node, serie, wh) {
   // wh => which esp do we want to query data
 
   console.log("get samples !");
-  //const node_url = window.location.href;
-  //const node_url = "https://esplucioles.herokuapp.com";
-  const node_url = "http://localhost:3000";
-  //const node_url = 'http://134.59.131.45:3000'
-  //const node_url = 'http://192.168.1.101:3000'
+  const node_url = location.host;
 
   //https://openclassrooms.com/fr/courses/1567926-un-site-web-dynamique-avec-jquery/1569648-le-fonctionnement-de-ajax
   // @ts-ignore
@@ -132,8 +128,8 @@ function get_samples(path_on_node, serie, wh) {
       });
       serie.setData(listeData); //serie.redraw();
     },
-    error: function (resultat, statut, erreur) {},
-    complete: function (resultat, statut) {},
+    error: function (resultat, statut, erreur) { },
+    complete: function (resultat, statut) { },
   });
 }
 
