@@ -152,24 +152,20 @@ function get_samples(path_on_node, serie, wh) {
   // wh => which esp do we want to query data
 
   console.log("get samples !");
-  //const node_url = window.location.href;
-  //const node_url = "https://esplucioles.herokuapp.com";
   const node_url = location.origin;
-  //const node_url = 'http://134.59.131.45:3000'
-  //const node_url = 'http://192.168.1.101:3000'
 
   //https://openclassrooms.com/fr/courses/1567926-un-site-web-dynamique-avec-jquery/1569648-le-fonctionnement-de-ajax
   // @ts-ignore
   $.ajax({
-    url: node_url.concat(path_on_node), // URL to "GET" : /esp/temp ou /esp/light
+    url: `${node_url}${path_on_node}`, // URL to "GET" : /esp/temp ou /esp/light
     type: "GET",
     headers: { Accept: "application/json" },
     data: { who: wh }, // parameter of the GET request
     success: function (resultat, statut) {
       serie.setData(resultat.map(({ date, value }) => ([Date.parse(date), value]))); //serie.redraw();
     },
-    error: function (resultat, statut, erreur) {},
-    complete: function (resultat, statut) {},
+    error: function (resultat, statut, erreur) { },
+    complete: function (resultat, statut) { },
   });
 }
 

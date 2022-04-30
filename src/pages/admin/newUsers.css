@@ -1,0 +1,46 @@
+table,
+td {
+    border: 1px solid #333;
+}
+
+th {
+    background-color: #333;
+    color: #fff;
+}
+
+.accept{
+    background-image: url(../assets/accept.png);
+    background-size: cover;
+    width: 50;
+    height: 50;
+    font-size: 2rem;
+    border-color: white;
+    border-width: 3px;
+}
+
+.accept:hover{
+    border-color: green;
+}
+
+
+.decline{
+    background-image: url(../assets/decline.png);
+    background-size: cover;
+    width: 50;
+    height: 50;
+    font-size: 2rem;
+    border-color: white;
+    border-width: 3px;
+}
+
+.decline:hover{
+    border-color: red;
+}
+
+
+#tableUsers{
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: perspective(1px) translateY(-50%);
+}

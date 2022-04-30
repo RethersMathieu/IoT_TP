@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="../../index.css" />
     <link rel="stylesheet" href="../graphs/ui_lucioles.css"/>
+    <link rel="stylesheet" href="../../menu.css" />
 
     <script src="../../index.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -15,13 +16,40 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../graphs/ui_lucioles.js"></script>
+    <link href="./accueil/ui_lucioles.css" rel="stylesheet"/>
+    <script src="./accueil/ui_lucioles.js"></script>
   </head>
   <body>
-    <h1 style="max-width: 600px; margin: 0 auto">ESPs of Lucioles</h1>
+
+    <div id="Menu">
+
+      <!--Block de Menu-->
+      <nav id="blockMenu">
+          <ul id="lineMenu">
+              <li class="colonneMenu animationButtonMenu underLineHover">
+                  <a class="aMenu">Accueil</a>
+              </li>
+              <li class="colonneMenu animationButtonMenu underLineHover">
+                <a class="aMenu" >Map</a>
+            </li>
+              </li>
+              <li class="colonneSign animationButtonMenu underLineHover">
+                  <a class="aMenu" href="../login">Connexion</a>
+              </li>
+              <li class="colonneSign animationButtonMenu underLineHover">
+                  <a class="aMenu" href="../signup">Inscription</a>
+              </li>
+          </ul>
+      </nav>
+      <div id="blockDeco"></div>
+  </div>
 
     <br>
-    <div id="container1" style="max-width: 1000px; height: 350px; margin: 0 auto"></div>
-    <div id="container2" style="max-width: 1000px; height: 350px; margin: 0 auto"></div>    
+    <p style="margin: 0 auto">.</p>
+
+
+    <div id="container1" style="max-width: 1000px; height: 300px; margin: 0 auto"></div><br>
+    <div id="container2" style="max-width: 1000px; height: 300px; margin: 0 auto"></div>    
     <div id="mydiv"></div>
   </body> 
 </html>
