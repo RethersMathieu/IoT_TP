@@ -1,29 +1,26 @@
-<html lang="fr" dir="ltr">
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>IoT TP</title>
 
-<head>
-    <meta charset="utf-8" />
-    <!--link rel="icon" href="IconeLogo.ico"/-->
-    <title>SignUp</title>
-    <link rel="stylesheet" href="./../logIn/account.css" />
-    <link rel="stylesheet" href="../../index.css" />
-    <script type = "text/javascript" src="./logIn/account.js"></script>  
-</head>
-<body>
-
-
-<div class="wrapper fonduBas">
-    <div id="contenu">
-        <!-- Tabs Titles -->
-        <h2 class="inactive souligne"><a href="logIn.html"> Se connecter</a></h2>
-        <h2 class="active">Créer un compte</h2>
-
-        <input type="text" id="login" class="fondu premier" name="login" placeholder="Nom d'utilisateur">
-        <input type="text" id="macAdress" class="fondu second" name="macAdress" placeholder="Adresse MAC">
-        <input type="submit" class="fondu troisieme" onclick = "setAccount()" value="S'inscrire">
-
-    </div>
-</div>
-
-</body>
-
+        <link rel="stylesheet" href="./../logIn/account.css" />
+        <link rel="stylesheet" href="../../index.css" />
+        <script src="../../index.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+        <script type = "text/javascript" src="./logIn/account.js"></script>  
+    </head>
+    <body>
+        <div class="wrapper fonduBas">
+            <div id="contenu">
+                <h2 class="inactive souligne"><a href="../login"> Se connecter</a></h2>
+                <h2 class="active">Créer un compte</h2>
+                <input type="text" id="login" class="fondu premier" name="login" placeholder="Nom d'utilisateur">
+                <input type="text" id="macAdress" class="fondu second" name="macAdress" placeholder="Adresse MAC">
+                <input type="submit" class="fondu troisieme" onclick = "setAccount()" value="S'inscrire">
+            </div>
+        </div>
+    </body>
 </html>

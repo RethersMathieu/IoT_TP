@@ -9,15 +9,13 @@ var chart1, chart2;
 const WS_TEMP = "/esp/topic_temp";
 const WS_LIGHT = "/esp/topic_light";
 
-const MAC_ADDRESS_ESP = [
-  { name: "ESP_Mathieu", mac_address: "30:AE:A4:8F:3D:20" },
-  { name: "ESP_Yannick", mac_address: "24:6F:28:22:7D:18" },
-];
+//=== Initialisation of all users in database ===================
+const MAC_ADDRESS_ESP = [];
+getAllUsers((result) => MAC_ADDRESS_ESP.push(...result.map( ({ name, mac }) => ({ name, mac_address: mac }) )));
 
 function init() {
   //=== Initialisation des traces/charts de la page html ===
   // Apply time settings globally
-  // @ts-ignore
   Highcharts.setOptions({
     global: {
       // https://stackoverflow.com/questions/13077518/highstock-chart-offsets-dates-for-no-reason
@@ -66,10 +64,22 @@ function init() {
   //=== Gestion de la flotte d'ESP =================================
   const which_esps = MAC_ADDRESS_ESP.map(({ mac_address }) => mac_address);
 
+
   for (var i = 0; i < which_esps.length; i++) {
     console.log("process_esp : ", i);
     process_esp(which_esps, i);
   }
+}
+
+//=== Search all users ==========================
+function getAllUsers(success, error) {
+  $.ajax({
+    url: location.origin.concat('/users/all'),
+    type: 'GET',
+    headers: { Accept: "application/json" },
+    success,
+    error,
+  });
 }
 
 //=== Installation de la periodicite des requetes GET============
@@ -112,7 +122,7 @@ function get_samples(path_on_node, serie, wh) {
   console.log("get samples !");
   //const node_url = window.location.href;
   //const node_url = "https://esplucioles.herokuapp.com";
-  const node_url = "http://localhost:3000";
+  const node_url = location.origin;
   //const node_url = 'http://134.59.131.45:3000'
   //const node_url = 'http://192.168.1.101:3000'
 
@@ -124,13 +134,7 @@ function get_samples(path_on_node, serie, wh) {
     headers: { Accept: "application/json" },
     data: { who: wh }, // parameter of the GET request
     success: function (resultat, statut) {
-      // Anonymous function on success
-      let listeData = [];
-      resultat.forEach(function (element) {
-        listeData.push([Date.parse(element.date), element.value]);
-        //listeData.push([Date.now(),element.value]);
-      });
-      serie.setData(listeData); //serie.redraw();
+      serie.setData(resultat.map(({ date, value }) => ([Date.parse(date), value]))); //serie.redraw();
     },
     error: function (resultat, statut, erreur) {},
     complete: function (resultat, statut) {},

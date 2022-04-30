@@ -14,7 +14,7 @@ function signup(dbo, callback) {
 
 module.exports = function (dbo) {
     return {
-        signupNext: signup(dbo, (user, res, next) => next()),
-        signupRes: signup(dbo, ({name}, res) => res.status(200).json({ message: `L'utilisateur ${name} a fais la demande.` }))
+        signupNext: signup(dbo, (user, { next }) => next()),
+        signupRes: signup(dbo, ({ name }, { res }) => res.status(200).json({ message: `L'utilisateur ${name} a fais la demande.` }))
     }
 }
