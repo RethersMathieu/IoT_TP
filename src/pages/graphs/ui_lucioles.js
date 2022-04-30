@@ -33,11 +33,13 @@ const MAC_ADDRESS_ESP = [];
 
 async function init() {
 
+  console.log("lala");
   try {
     const result = await getAllUsers();
     MAC_ADDRESS_ESP.push(...result.map(({ name, mac }) => ({ name: name.toUpperCase(), mac_address: mac })));
   } catch (err) {
     if (err.responseJSON.error_auth) {
+      console.log("lili");
       location.href = location.origin.concat('/login');
     }
   }
@@ -153,10 +155,15 @@ function get_samples(path_on_node, serie, wh) {
 
   //https://openclassrooms.com/fr/courses/1567926-un-site-web-dynamique-avec-jquery/1569648-le-fonctionnement-de-ajax
   // @ts-ignore
+  const json = sessionStorage.getItem("user");
+  const {token} = json ? JSON.parse(json) : {};
   $.ajax({
     url: `${node_url}${path_on_node}`, // URL to "GET" : /esp/temp ou /esp/light
     type: "GET",
-    headers: { Accept: "application/json" },
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`
+    },
     data: { who: wh }, // parameter of the GET request
     success: function (resultat, statut) {
       serie.setData(resultat.map(({ date, value }) => ([Date.parse(date), value]))); //serie.redraw();
