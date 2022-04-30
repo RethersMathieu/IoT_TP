@@ -1,0 +1,3 @@
+window.onstorage = function () {
+    
+}

@@ -11,7 +11,7 @@ function authEchecDefault(_req, res) {
     res.status(401).json({ error_auth: 'Authentification invalid.' });
 }
 
-module.exports = function (dbo, success = authSuccessDefault, echec = authEchecDefault) {
+module.exports = function (dbo, success = authSuccessDefault, echec = authEchecDefault, for_admin = false) {
     return function (req, res, next) {
         const { authorization } = req.headers;
         const token =  (authorization && authorization.split(' ')[1]);
@@ -21,9 +21,9 @@ module.exports = function (dbo, success = authSuccessDefault, echec = authEchecD
         }
         const { userId } = jwt.verify(token, 'HS256');
         dbo.collection('user').findOne({ _id: new ObjectId(userId) }, function (err, user) {
-            console.log(user);
+            const access = for_admin ? user.is_admin || false : true; 
             if (err) return res.status(500).json({ error: 'Erreur inatandue.' })
-            if (!lodash.isNil(user)) success(req, res, next);
+            if (!lodash.isNil(user) && access) success(req, res, next);
             else if (echec) echec(req, res, next );
         });
     }

@@ -11,8 +11,12 @@ function isJSON(str) {
     return obj;
 }
 
+async function authorizeMQTT(dbo, mac) {
+    return dbo.collection('user').findOne({ mac });
+}
+
 async function initMongo() {
-    return await require("./src/core/database/db");
+    return require("./src/core/database/db");
 }
 
 async function initMQTT(dbo) {
@@ -27,13 +31,17 @@ async function initMQTT(dbo) {
             if (err) throw new Error(`ERROR SUBSCRIBE TOPIC: ${TOPIC_LIGHT}.`);
         });
     });
-    mqtt_client.on("message", function (topic, message) {
+    mqtt_client.on("message", async function (topic, message) {
         console.log("\nMQTT message on TOPIC:", topic.toString());
         console.log("Message payload", message.toString());
         let msg;
+        const key = path.parse(topic.toString()).base;
 
         if (!(msg = isJSON(message.toString())) && lodash.isUndefined(msg.who) && lodash.isUndefined(msg.value)) {
             console.error('Message refused');
+            return;
+        }else if (!(await authorizeMQTT(dbo, msg.who))) {
+            console.error('Message non authorisé.');
             return;
         }
 
@@ -44,8 +52,6 @@ async function initMQTT(dbo) {
             timeZone: "Europe/Paris",
         });
         const new_entry = { date, who: msg.who, value: msg.value };
-
-        const key = path.parse(topic.toString()).base;
         dbo.collection(key).insertOne(new_entry, function (err, res) {
             if (err) return err;
             console.log('\nItem:', `${JSON.stringify(new_entry)}`, '\ninserted in db in collection:', key);
