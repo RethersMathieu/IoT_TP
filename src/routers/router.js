@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 module.exports = function (dbo) {
-    const router_pages =        require('./routerPages');
+    const router_pages =        require('./routerPages')(dbo);
     const router_esp =          require('./routerEsp')(dbo);
     const router_users =        require('./routerUsers')(dbo);
     const router_connexion =    require('./routerConnexion')(dbo);

@@ -5,15 +5,43 @@
 // RMQ : Manipulation naive (debutant) de Javascript
 //
 
+async function aInit() {
+
+}
+
+function async_ajax(params) {
+  const { success } = params;
+  const { error } = params;
+  delete params.success;
+  delete params.error;
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      ...params,
+      success: (result, status) => {
+        if (success) success(result, status);
+        resolve(result, status);
+      },
+      error: (result, status, err) => {
+        if (error) error(result, status, err);
+        reject(result, status, err);
+      }
+    });
+  });
+}
+
 var chart1, chart2;
 const WS_TEMP = "/esp/topic_temp";
 const WS_LIGHT = "/esp/topic_light";
 
 //=== Initialisation of all users in database ===================
 const MAC_ADDRESS_ESP = [];
-getAllUsers((result) => MAC_ADDRESS_ESP.push(...result.map( ({ name, mac }) => ({ name, mac_address: mac }) )));
+getAllUsers((result) => {
+  console.log(result);
+  MAC_ADDRESS_ESP.push(...result.map( ({ name, mac }) => ({ name, mac_address: mac }) ));
+});
 
 function init() {
+
   //=== Initialisation des traces/charts de la page html ===
   // Apply time settings globally
   Highcharts.setOptions({
@@ -73,10 +101,14 @@ function init() {
 
 //=== Search all users ==========================
 function getAllUsers(success, error) {
+  const { token } = JSON.parse(sessionStorage.getItem('user'));
   $.ajax({
     url: location.origin.concat('/users/all'),
     type: 'GET',
-    headers: { Accept: "application/json" },
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`
+    },
     success,
     error,
   });
