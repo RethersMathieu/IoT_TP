@@ -10,7 +10,7 @@ function initLogin() {
             data,
             success: function (session) {
                 sessionStorage.setItem('user', JSON.stringify(session));
-                location.href = location.origin;
+                location.href = location.origin.concat('/graphs');
             },
             error: (r, status, err) => console.error(r)
         });

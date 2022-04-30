@@ -13,16 +13,13 @@ function authEchecDefault(_req, res) {
 
 module.exports = function (dbo, success = authSuccessDefault, echec = authEchecDefault) {
     return function (req, res, next) {
-        console.log(req.headers);
         const { authorization } = req.headers;
-        const token =  authorization && authorization.split(' ')[1];
-        console.log(token, !token);
-        if (!token) {
+        const token =  (authorization && authorization.split(' ')[1]);
+        if (token === typeof undefined || token === typeof null) {
             echec(req, res, next );
             return;
-        };
+        }
         const { userId } = jwt.verify(token, 'HS256');
-        console.log('User id : ', userId)
         dbo.collection('user').findOne({ _id: new ObjectId(userId) }, function (err, user) {
             console.log(user);
             if (err) return res.status(500).json({ error: 'Erreur inatandue.' })

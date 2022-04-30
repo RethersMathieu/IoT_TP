@@ -4,11 +4,6 @@
 // Auteur : G.MENEZ
 // RMQ : Manipulation naive (debutant) de Javascript
 //
-
-async function aInit() {
-
-}
-
 function async_ajax(params) {
   const { success } = params;
   const { error } = params;
@@ -35,15 +30,18 @@ const WS_LIGHT = "/esp/topic_light";
 
 //=== Initialisation of all users in database ===================
 const MAC_ADDRESS_ESP = [];
-getAllUsers((result) => {
-  console.log(result);
-  MAC_ADDRESS_ESP.push(...result.map( ({ name, mac }) => ({ name, mac_address: mac }) ));
-});
 
-function init() {
+async function init() {
 
-  //=== Initialisation des traces/charts de la page html ===
-  // Apply time settings globally
+  try {
+    const result = await getAllUsers();
+    MAC_ADDRESS_ESP.push(...result.map(({ name, mac }) => ({ name: name.toUpperCase(), mac_address: mac })));
+  } catch (err) {
+    if (err.responseJSON.error_auth) {
+      location.href = location.origin.concat('/login');
+    }
+  }
+
   Highcharts.setOptions({
     global: {
       // https://stackoverflow.com/questions/13077518/highstock-chart-offsets-dates-for-no-reason
@@ -100,17 +98,16 @@ function init() {
 }
 
 //=== Search all users ==========================
-function getAllUsers(success, error) {
-  const { token } = JSON.parse(sessionStorage.getItem('user'));
-  $.ajax({
+function getAllUsers() {
+  const json = sessionStorage.getItem('user');
+  const { token } = json ? JSON.parse(json) : {};
+  return async_ajax({
     url: location.origin.concat('/users/all'),
     type: 'GET',
     headers: {
       Accept: "application/json",
       Authorization: `Bearer ${token}`
     },
-    success,
-    error,
   });
 }
 
