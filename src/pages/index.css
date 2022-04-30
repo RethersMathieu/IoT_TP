@@ -11,21 +11,10 @@ body
     height: 100%;
     margin: 0;
     padding: 0;
-}
-
-.accept{
-    background-color: green;
+    padding-top: 40px;
 }
 
 
-.decline{
-    background-color: red;
-}
-
-input[type=button]:hover{
-    border-color: white;
-    border-width: 2px;
-}
 
 th, td {
     padding: 15px;

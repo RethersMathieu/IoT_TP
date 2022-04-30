@@ -10,7 +10,7 @@ function completeTable(){
     console.log("lala");
     let users = [
         {name: "Banana", mac:"UI:76:KL:90:K0:7Y"},
-        {name: "Banana", mac:"UI:76:KL:90:K0:7Y"}
+        {name: "Orange", mac:"UI:76:KL:90:K0:7Y"}
     ]
     
 

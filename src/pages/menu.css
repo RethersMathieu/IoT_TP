@@ -1,0 +1,95 @@
+#Menu
+{
+	width: 100%;
+	position: fixed;
+	top: 0;
+	z-index: 700;
+}
+
+#blockMenu
+{
+	float: right;
+	width: 100%;
+}
+
+#lineMenu
+{
+	list-style-type: none;
+	overflow: hidden;
+	background-color: #0073be;
+	height: 49px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.colonneMenu
+{
+	float: left;
+	font-size: 17px;
+	padding: 14px 20px;
+	background-color: transparent;
+	color: white;
+	transition: background-color 0.1s, padding 0.1s, font-size 0.1s,transform 0.2s;
+	cursor: pointer;
+}
+
+.animationButtonMenu:hover
+{
+	background-color: #197abb;
+	font-size: 19px;
+	padding: 13px 17px;
+}
+
+.aMenu
+{
+	color: white;
+	text-decoration: none;
+}
+
+.colonneSign
+{
+    float: right;
+	font-size: 17px;
+	padding: 14px 20px;
+	background-color: transparent;
+	color: white;
+	transition: background-color 0.2s, padding 0.2s, font-size 0.2s,transform 0.2s;
+	cursor: pointer;
+}
+
+.underLineHover:after
+{
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    bottom: -10px;
+    content: "";
+    transition: width 0.2s;
+}
+
+.underLineHover:hover:after
+{
+    width: 100%;
+}
+
+
+#blockLogo
+{
+	float: left;
+	width: 5%;
+}
+
+#logo
+{
+	width: 100%;
+	height: 110px;
+}
+
+#blockDeco
+{
+	width: 100%;
+	height: 10px;
+	float: right;
+	background-color: #5496c2;
+}
