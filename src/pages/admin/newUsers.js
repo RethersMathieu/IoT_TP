@@ -15,6 +15,9 @@ function completeTable(){
         const macUserRow = document.createElement("td");
         const acceptUserRow = document.createElement("td");
         const declineUserRow = document.createElement("td");
+
+        acceptUserRow.classList.add("btn-cell-admin");
+        declineUserRow.classList.add("btn-cell-admin");
         
         nameUserRow.appendChild(document.createTextNode(name));
         macUserRow.appendChild(document.createTextNode(mac));
@@ -22,11 +25,13 @@ function completeTable(){
         const btnAccept = document.createElement("input");
         btnAccept.type = "button"
         btnAccept.classList.add("accept");
+        btnAccept.classList.add("btn-table-admin");
         btnAccept.onclick = acceptUser;
 
         const btnDecline= document.createElement("input");
         btnDecline.type = "button"
         btnDecline.classList.add("decline");
+        btnDecline.classList.add("btn-table-admin");
         btnDecline.onclick = declineUser;
 
         acceptUserRow.appendChild(btnAccept);

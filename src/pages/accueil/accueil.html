@@ -7,10 +7,12 @@
         <title>IoT TP</title>
         <link rel="stylesheet" href="../../index.css" />
         <link rel="stylesheet" href="../../menu.css" />
+        <link rel="stylesheet" href="../../accueil/square.css">
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="../../index.js"></script>
     </head>
-    <body onload="isConnected(); isAdmin();">
+    <body>
 
         <div id="Menu">
 
@@ -29,6 +31,31 @@
                 </ul>
             </nav>
             <div id="blockDeco"></div>
+        </div>
+        <div class="curtain" data-down="true">
+            <div class="containerShape">
+                <div class="shape square animation">
+                    <!--Side-->
+                    <div class="side front"><span>G.MENEZ</span></div>
+                    <div class="side back"><span>G.MENEZ</span></div>
+                    <div class="side top"><span>G.MENEZ</span></div>
+                    <div class="side bottom"><span>G.MENEZ</span></div>
+                    <div class="side right"><span>G.MENEZ</span></div>
+                    <div class="side left"><span>G.MENEZ</span></div>
+    
+                    <!--Point-->
+                    <div class="shape square point3D animation">
+                        <div class="side front"><span>&#9829;</span></div>
+                        <div class="side back"><span>&#9829;</span></div>
+                        <div class="side top"><span>&#9829;</span></div>
+                        <div class="side bottom"><span>&#9829;</span></div>
+                        <div class="side right"><span>&#9829;</span></div>
+                        <div class="side left"><span>&#9829;</span></div>
+                    </div>
+                    
+                </div>
+            </div>
+            <span id="msg">Bienvenue !</span>
         </div>
     </body>
 </html>

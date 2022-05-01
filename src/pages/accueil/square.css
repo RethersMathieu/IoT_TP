@@ -1,0 +1,155 @@
+:root {
+    --width: 200px;
+    --color: rgba(0, 124, 226, 0.35);
+    --marge: calc(var(--width)/2);
+    --widthPoint: calc(var(--width)*0.6);
+}
+
+.shape.square {
+    width: var(--width);
+    height: var(--width);
+    margin: var(--marge);
+    position: relative;
+    transform-style: preserve-3d;
+    transform: translateZ(-50px);
+}
+
+.shape.square > .side {
+    position: absolute;
+    width: var(--width);
+    height: var(--width);
+    background-color: var(--color);
+    box-shadow: 0 0 1px 0px rgba(0, 0, 0, .5) inset;
+}
+
+.shape.square > .side.front { transform: rotateY(0deg) translateZ(calc(var(--width)/2)); }
+.shape.square > .side.back { transform: rotateY(90deg) translateZ(calc(var(--width)/2)); }
+.shape.square > .side.right { transform: rotateY(180deg) translateZ(calc(var(--width)/2)); }
+.shape.square > .side.left { transform: rotateY(-90deg) translateZ(calc(var(--width)/2)); }
+.shape.square > .side.top { transform: rotateX(90deg) translateZ(calc(var(--width)/2)); }
+.shape.square > .side.bottom { transform: rotateX(-90deg) translateZ(calc(var(--width)/2)); }
+
+.shape.square.animation {
+    animation: rotate infinite 20s linear;
+}
+
+.shape.square.point3D {
+    width: var(--widthPoint);
+    height: var(--widthPoint);
+    margin: 0;
+    position: absolute;
+    top: calc(var(--width)/2 - var(--widthPoint)/2);
+    left: calc(var(--width)/2 - var(--widthPoint)/2);
+    transform-style: preserve-3d;
+    transform: rotateX(45deg) rotateY(45deg);
+}
+
+.shape.square.point3D > .side {
+    position: absolute;
+    width: var(--widthPoint);
+    height: var(--widthPoint);
+    background-color: rgb(135, 52, 212);
+    box-shadow: 0 0 1px 0px rgb(0, 0, 0) inset;
+}
+
+.shape.square.point3D > .side.front { transform: rotateY(0deg) translateZ(calc(var(--widthPoint)/2)); }
+.shape.square.point3D > .side.back { transform: rotateY(90deg) translateZ(calc(var(--widthPoint)/2)); }
+.shape.square.point3D > .side.right { transform: rotateY(180deg) translateZ(calc(var(--widthPoint)/2)); }
+.shape.square.point3D > .side.left { transform: rotateY(-90deg) translateZ(calc(var(--widthPoint)/2)); }
+.shape.square.point3D > .side.top { transform: rotateX(90deg) translateZ(calc(var(--widthPoint)/2)); }
+.shape.square.point3D > .side.bottom { transform: rotateX(-90deg) translateZ(calc(var(--widthPoint)/2)); }
+
+.shape.square.point3D.animation {
+    animation: reverse rotate infinite 5s linear;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotateX(0deg) rotateY(0deg);
+    }
+    to {
+        transform: rotateX(360deg) rotateY(360deg);
+    }
+}
+
+.shape.square > .side > span{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    justify-content: center;
+    align-items: center;
+
+    color: rgb(212, 212, 212);
+    text-transform: uppercase;
+    font-size: 28px;
+}
+
+.shape.square.point3D > .side > span{
+
+    color: white;
+    text-transform: none;
+    font-size: 400%;
+}
+
+
+.curtain {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background: white;
+
+    width: 100%;
+    height: 100%;
+
+    justify-content: center;
+    align-items: center;
+
+    margin: 0;
+    padding: 0;
+    
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    color: #000000;
+    font-weight: 700;
+    text-decoration: rgb(68, 68, 68);
+    font-style: normal;
+    font-variant: small-caps;
+    transition: max-height 1s;
+}
+
+.curtain[data-down='true'] {
+    min-height: 450px;
+    max-height: 100%;
+}
+
+.curtain[data-down='false'] {
+    min-height: 0px;
+    max-height: 0%;
+
+}
+
+.curtain > .containerShape {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    perspective: 1000px;
+}
+
+.curtain > #msg {
+    font-size: 12px;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: underline;
+    text-underline-position: above;
+}
