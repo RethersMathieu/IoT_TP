@@ -69,5 +69,5 @@ function removeItemMenu(id){
 
 function disconnect(){
     sessionStorage.removeItem("user");
-    location.reload();
+    location.href = location.origin.concat('/');
 }
