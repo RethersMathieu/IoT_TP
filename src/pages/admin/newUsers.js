@@ -37,7 +37,10 @@ async function completeTable() {
       },
     });
   } catch (error) {
-    location.href = location.origin.concat('/login');
+    if (sessionStorage.getItem('user')) {
+        return location.href = location.origin.concat('/login');
+    }
+    location.href = location.origin;
     console.log(error);
   }
 
