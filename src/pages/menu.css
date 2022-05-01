@@ -33,6 +33,7 @@
 	cursor: pointer;
 }
 
+.animationButtonMenu.selected,
 .animationButtonMenu:hover
 {
 	background-color: #197abb;
@@ -68,6 +69,7 @@
     transition: width 0.2s;
 }
 
+.underLineHover.selected::after,
 .underLineHover:hover:after
 {
     width: 100%;
