@@ -21,8 +21,7 @@ module.exports = function (dbo, success = authSuccessDefault, echec = authEchecD
         }
         const { userId } = jwt.verify(token, 'HS256');
         dbo.collection('user').findOne({ _id: new ObjectId(userId) }, function (err, user) {
-            const access = for_admin ? user.is_admin || false : true; 
-            console.log("access : ",access)
+            const access = for_admin ? user.is_admin || false : true;
             if (err) return res.status(500).json({ error: 'Erreur inatandue.' })
             if (!lodash.isNil(user) && access) success(req, res, next);
             else if (echec) echec(req, res, next );

@@ -7,7 +7,6 @@ module.exports = function (dbo) {
                 .collection('in_waiting')
                 .find()
                 .toArray(function (err, result) {
-                    console.log(result);
                     if (err) return res.status(500).json({ error: 'Erreur inatandue.' });
                     res.status(200).json(result);
                 });
