@@ -8,7 +8,7 @@ module.exports = function (dbo) {
         .collection(what)
         .find({ who })
         .sort({ _id: -1 })
-        .limit(limit ?? 200)
+        .limit(limit || 200)
         .toArray(function (err, result) {
           if (err) throw err;
           res.status(200).json(result.reverse());

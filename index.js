@@ -21,37 +21,43 @@ async function initMongo() {
 
 async function initMQTT(dbo) {
     const mqtt_client = require("./src/core/mqtt/client");
-    const TOPIC_LIGHT = "my/sensors/ym/topic_light";
-    const TOPIC_TEMP = "my/sensors/ym/topic_temp";
+
     mqtt_client.on("connect", function () {
-        mqtt_client.subscribe(TOPIC_TEMP, function (err) {
+        mqtt_client.subscribe('iot/M1Miage2022', function (err) {
             if (err) throw new Error(`ERROR SUBSCRIBE TOPIC: ${TOPIC_TEMP}.`);
         });
-        mqtt_client.subscribe(TOPIC_LIGHT, function (err) {
-            if (err) throw new Error(`ERROR SUBSCRIBE TOPIC: ${TOPIC_LIGHT}.`);
-        });
     });
+
     mqtt_client.on("message", async function (topic, message) {
         console.log("\nMQTT message on TOPIC:", topic.toString());
         console.log("Message payload", message.toString());
         let msg;
         const key = path.parse(topic.toString()).base;
 
-        if (!(msg = isJSON(message.toString())) && lodash.isUndefined(msg.who) && lodash.isUndefined(msg.value)) {
+        if (!(msg = isJSON(message.toString()))) {
             console.error('Message refused');
             return;
-        }else if (!(await authorizeMQTT(dbo, msg.who))) {
+        }
+        const { status, info } = msg;
+        console.log(status.temperature, status.light);
+        console.log(info.ident);
+        if (!(status && info && info.ident && !lodash.isNil(status.temperature) && !lodash.isNil(status.light))) {
+            console.error('Message refused 1');
+            return;
+        }
+        else if (!(await authorizeMQTT(dbo, info.ident))) {
             console.error('Message non authorisé.');
             return;
         }
 
         const whoList = [];
-        if (!whoList.find(({ who }) => who === msg.who)) whoList.push(msg);
+        if (!whoList.find(msg => msg.ident.who === info.ident)) whoList.push(msg);
         console.log("wholist using the node server :", whoList);
-        const date = new Date().toLocaleString("sv-SE", {
-            timeZone: "Europe/Paris",
-        });
-        const new_entry = { date, who: msg.who, value: msg.value };
+        const date = new Date().toLocaleString("sv-SE", { timeZone: "Europe/Paris" });
+        const { ident } = info;
+        const { temperature, light } = status;
+
+        const new_entry = { date, who: ident, temperature, light };
         dbo.collection(key).insertOne(new_entry, function (err, res) {
             if (err) return err;
             console.log('\nItem:', `${JSON.stringify(new_entry)}`, '\ninserted in db in collection:', key);

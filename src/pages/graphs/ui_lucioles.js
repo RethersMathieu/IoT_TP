@@ -25,8 +25,6 @@ function async_ajax(params) {
 }
 
 var chart1, chart2;
-const WS_TEMP = "/esp/topic_temp";
-const WS_LIGHT = "/esp/topic_light";
 
 //=== Initialisation of all users in database ===================
 const MAC_ADDRESS_ESP = [];
@@ -115,37 +113,20 @@ function getAllUsers() {
 
 //=== Installation de la periodicite des requetes GET============
 function process_esp(which_esps, i) {
+  const WS = M1Miage2022;
   const refreshT = 10000; // Refresh period for chart
   const esp = which_esps[i]; // L'ESP "a dessiner"
   console.log("process_esp : ", esp); // cf console du navigateur
 
   // Gestion de la temperature
   // premier appel pour eviter de devoir attendre RefreshT
-  get_samples(WS_TEMP, chart1.series[i], esp);
-  //calls a function or evaluates an expression at specified
-  //intervals (in milliseconds).
-  window.setInterval(
-    get_samples,
-    refreshT,
-    WS_TEMP, // param 1 for get_samples()
-    chart1.series[i], // param 2 for get_samples()
-    esp
-  ); // param 3 for get_samples()
-
-  // Gestion de la lumiere
-  get_samples(WS_LIGHT, chart2.series[i], esp);
-  window.setInterval(
-    get_samples,
-    refreshT,
-    WS_LIGHT, // URL to GET
-    chart2.series[i], // Serie to fill
-    esp
-  ); // ESP targeted
+  get_samples(WS, chart1.series[i], chart2.series[i], esp);
+  setInterval(get_samples, refreshT, WS, chart1.series[i], chart2.series[i], esp);
 }
 
 //=== Recuperation dans le Node JS server des samples de l'ESP et
 //=== Alimentation des charts ====================================
-function get_samples(path_on_node, serie, wh) {
+function get_samples(path_on_node, serie1, serie2, wh) {
   // path_on_node => help to compose url to get on Js node
   // serie => for choosing chart/serie on the page
   // wh => which esp do we want to query data
@@ -166,10 +147,9 @@ function get_samples(path_on_node, serie, wh) {
     },
     data: { who: wh }, // parameter of the GET request
     success: function (resultat, statut) {
-      serie.setData(resultat.map(({ date, value }) => ([Date.parse(date), value]))); //serie.redraw();
+      serie1.setData(resultat.map(({ date, temperature }) => ([Date.parse(date), temperature])));
+      serie2.setData(resultat.map(({ date, light }) => ([Date.parse(date), light])));
     },
-    error: function (resultat, statut, erreur) { },
-    complete: function (resultat, statut) { },
   });
 }
 
