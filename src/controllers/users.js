@@ -8,5 +8,5 @@ module.exports = function (dbo) {
             if (err) return res.status(500).json({ error: 'Erreur inatandue.' });
             res.status(200).json(result);
           });
-      }
+    }
 }
