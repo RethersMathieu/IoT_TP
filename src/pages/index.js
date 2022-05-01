@@ -24,7 +24,7 @@ function updateMenu() {
         const itemLogIn = createItemMenu("liLogIn", "Se connecter");
         const liLogIn = itemLogIn.li
         liLogIn.classList.add("colonneSign");
-        if (location.pathname.split('/')[1] === 'login') li.classList.add('selected');
+        if (location.pathname.split('/')[1] === 'login') liLogIn.classList.add('selected');
 
         const aLogin = itemLogIn.a
         aLogin.href = "../login";
@@ -32,7 +32,7 @@ function updateMenu() {
         const itemSignUp = createItemMenu("liSignUp", "S'inscrire");
         const liSignUp = itemSignUp.li
         liSignUp.classList.add("colonneSign");
-        if (location.pathname.split('/')[1] === 'signup') li.classList.add('selected');
+        if (location.pathname.split('/')[1] === 'signup') liSignUp.classList.add('selected');
 
         const aSignUp = itemSignUp.a
         aSignUp.href = "../signup";
