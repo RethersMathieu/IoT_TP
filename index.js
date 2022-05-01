@@ -39,8 +39,6 @@ async function initMQTT(dbo) {
             return;
         }
         const { status, info } = msg;
-        console.log(status.temperature, status.light);
-        console.log(info.ident);
         if (!(status && info && info.ident && !lodash.isNil(status.temperature) && !lodash.isNil(status.light))) {
             console.error('Message refused 1');
             return;
@@ -52,7 +50,7 @@ async function initMQTT(dbo) {
 
         const whoList = [];
         if (!whoList.find(msg => msg.ident.who === info.ident)) whoList.push(msg);
-        console.log("wholist using the node server :", whoList);
+        console.log("wholist using the node server :", JSON.stringify(whoList));
         const date = new Date().toLocaleString("sv-SE", { timeZone: "Europe/Paris" });
         const { ident } = info;
         const { temperature, light } = status;
