@@ -37,7 +37,7 @@ async function completeTable() {
       },
     });
   } catch (error) {
-    
+    location.href = location.origin.concat('/login');
     console.log(error);
   }
 
