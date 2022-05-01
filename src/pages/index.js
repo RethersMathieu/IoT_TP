@@ -8,13 +8,11 @@ function updateMenu() {
 
         const userObject = JSON.parse(userJSON);
        if(userObject && userObject.isAdmin){
-            console.log("admin");
             const {li, a} = createItemMenu("liAdmin", "Admin");
             li.classList.add("colonneSign");
+            if (location.pathname.split('/')[1] === 'admin') li.classList.add('selected');
             a.href = "../admin";
        }
-
-        console.log("connected");
         const {li, a} = createItemMenu("liDisconnect", "Déconnexion");
         li.classList.add("colonneSign");
         a.onclick = disconnect;
@@ -26,6 +24,7 @@ function updateMenu() {
         const itemLogIn = createItemMenu("liLogIn", "Se connecter");
         const liLogIn = itemLogIn.li
         liLogIn.classList.add("colonneSign");
+        if (location.pathname.split('/')[1] === 'login') li.classList.add('selected');
 
         const aLogin = itemLogIn.a
         aLogin.href = "../login";
@@ -33,6 +32,7 @@ function updateMenu() {
         const itemSignUp = createItemMenu("liSignUp", "S'inscrire");
         const liSignUp = itemSignUp.li
         liSignUp.classList.add("colonneSign");
+        if (location.pathname.split('/')[1] === 'signup') li.classList.add('selected');
 
         const aSignUp = itemSignUp.a
         aSignUp.href = "../signup";
