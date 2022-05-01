@@ -33,13 +33,11 @@ const MAC_ADDRESS_ESP = [];
 
 async function init() {
 
-  console.log("lala");
   try {
     const result = await getAllUsers();
     MAC_ADDRESS_ESP.push(...result.map(({ name, mac }) => ({ name: name.toUpperCase(), mac_address: mac })));
   } catch (err) {
     if (err.responseJSON.error_auth) {
-      console.log("lili");
       location.href = location.origin.concat('/login');
     }
   }

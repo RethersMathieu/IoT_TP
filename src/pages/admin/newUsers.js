@@ -1,11 +1,47 @@
-function completeTable(){
+
+
+function async_ajax(params) {
+    const { success } = params;
+    const { error } = params;
+    delete params.success;
+    delete params.error;
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        ...params,
+        success: (result, status) => {
+          if (success) success(result, status);
+          resolve(result, status);
+        },
+        error: (result, status, err) => {
+          if (error) error(result, status, err);
+          reject(result, status, err);
+        }
+      });
+    });
+}
+
+  
+async function completeTable(){
     console.log("lala");
 
-    let users = [
-        //recup vrais users 
-        {name: "Banana", mac:"UI:76:KL:90:K0:7Y"},
-        {name: "Orange", mac:"UI:76:KL:90:K0:7Y"}
-    ]
+    const json = sessionStorage.getItem("user");
+    const {token} = json ? JSON.parse(json) : {};
+
+    let users = [];
+
+    try {
+        await async_ajax({
+            url: location.origin.concat('/admin/all_in_wainting'),
+            type: 'GET',
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            success: (res) => users = res
+          });
+    } catch (error) {
+ 
+    }
 
     users.forEach(function({name, mac}){
         console.log(name)
