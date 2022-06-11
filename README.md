@@ -104,7 +104,7 @@ module.exports = function (dbo, success = authSuccessDefault, echec = authEchecD
     }
 };
 ```
-#### <u>Exemple d'utilisation</u>
+#### <u>Exemple d'utilisation :</u>
 ```js
 module.exports = function (dbo) {
     const router = require('express').Router();
