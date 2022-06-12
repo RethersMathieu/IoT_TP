@@ -130,9 +130,7 @@ module.exports = function (
   };
 };
 ```
-
-#### <u>Exemple d'utilisation</u>
-
+#### <u>Exemple d'utilisation :</u>
 ```js
 module.exports = function (dbo) {
   const router = require("express").Router();
